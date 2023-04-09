@@ -1,0 +1,27 @@
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, color TEXT, quantity INTEGER, price REAL, gender TEXT);
+INSERT INTO store VALUES (1, "t-shirt", "white", 10, 3.25, "M");
+INSERT INTO store VALUES(2, "t-shirt", "white", 7, 3.10, "F");
+INSERT INTO store VALUES(3, "Polo", "red", 3, 7.20, "F");
+INSERT INTO store VALUES(4, "Polo", "white", 5, 5.50, "M");
+INSERT INTO store VALUES(5, "Polo", "yellow", 2, 4.25, "F");
+INSERT INTO store VALUES(6, "Bermuda shorts","White", 7, 13.10, "F");
+INSERT INTO store VALUES(7, "Bermuda shorts", "black", 3, 14.20, "M");
+INSERT INTO store VALUES(8, "Bermuda shorts", "pink", 1, 10.50, "F");
+INSERT INTO store VALUES(9, "capris", "red", 3, 18.20, "F");
+INSERT INTO store VALUES(10, "capris", "black", 8, 16.70, "F");
+INSERT INTO store VALUES(11, "Tube top", "Blue", 7, 9.29, "F");
+INSERT INTO store VALUES(12, "jeans", "blue", 22, 19.99, "M");
+INSERT INTO store VALUES(13, "jeans", "blue", 18, 18.99, "F");
+INSERT INTO store VALUES(14, "belt", "black", 8, 14.99, "M");
+INSERT INTO store VALUES(15, "belt", "black", 5, 14.99, "F");
+INSERT INTO store VALUES(16, "tube dress", "pink", 4, 21.99, "F");
+INSERT INTO store VALUES(17, "Undershirt", NULL, 19, 2.99, "M");
+
+---Display everything in the store
+SELECT * FROM store;
+---Display items profile that are more than $10
+SELECT * FROM store WHERE price > 10 ORDER BY price;
+---Display items where the price is over $10, They are labeled popular if quantity is over 10
+SELECT item, price, CASE WHEN quantity > 10 THEN "popular" ELSE "not popular" END AS poularity FROM store WHERE price > 10;
+--- Display total cost of each item with the total cost descending order 
+SELECT item, gender, (price*quantity) AS Total_cost FROM store ORDER Total_cost DESC;
