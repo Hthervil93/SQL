@@ -1,0 +1,66 @@
+/* Create table about the people and what they do here */
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY, name TEXT, age INTEGER);
+INSERT INTO famous_people VALUES (1, 'Shania Twain', 55), 
+(2,'Selena Gomez', 30), 
+(3, 'Miley Cyrus', 30),
+(4, 'John Mayer', 45),
+(5, 'Heather Locklear', 55),
+(6, 'Bob Ross', 65),
+(7, 'Rachael Ray', 50),
+(8, 'Ted Cruz', 52),
+(9, 'Montell Williams', 70),
+(10, 'Chuck Norris', 80),
+(11, 'Ashton Kutcher', 45),
+(12, 'Tom Kenny', 60),
+(13, 'Tyrese Gibson', 42),
+(14, 'Jennifer Lopez', 53),
+(15, 'Stephen King', 78),
+(16, 'Greg Abbott', 71);
+
+CREATE TABLE occupation ( id INTEGER PRIMARY KEY, famousppl_id INTEGER, job TEXT, name TEXT);
+INSERT INTO occupation VALUES (1, 1, 'singer', 'any man of mine'), 
+(2, 2, 'singer', 'Only You'),
+(3, 2, 'actor', 'Wizards of Waverly Place'),
+(4, 3, 'singer', 'Somebody else'),
+(5, 3, 'actor', 'Hannah Montana'),
+(6, 4, 'singer', 'Stop This Train'),
+(7, 5, 'actor', 'Melrose Place'),
+(8, 6, 'painter', NULL),
+(9, 7, 'talkshow', 'Rachael Ray Show'),
+(10, 7, 'chef', NULL),
+(11, 8, 'politician', 'Texas Senator'),
+(12, 9, 'talkshow', 'Montell Williams Show'),
+(13, 10, 'actor', 'Walker Texas Ranger'),
+(14, 11, 'actor', 'Thats seventy show'),
+(15, 12, 'voiceactor', 'spongebob'),
+(16, 13, 'actor', 'Fast and Furious'),
+(17, 13, 'singer', 'Just a Baby Boy'),
+(18, 14, 'singer', 'All I Have'),
+(19, 14, 'actor', 'Home'),
+(20, 14, 'dancer', NULL),
+(21, 15, 'Writer', 'Cujo'),
+(22, 16, 'Politician', 'Govenor of Texas');
+
+CREATE TABLE coworkers (id INTEGER PRIMARY KEY, person_1 INTEGER, person_2 INTEGER);
+INSERT INTO coworkers VALUES (1, 2, 3), (2, 3, 4), (3, 4,7), (4, 3,5);
+
+/*table that combines famous people with what they do and a work they've done*/
+SELECT famous_people.name, job, occupation.name FROM famous_people 
+LEFT OUTER JOIN occupation
+ON famousppl_id = famous_people.id;
+
+/*wanting to do a project on singers */
+SELECT famous_people.name, job, occupation.name AS name_of_work, CASE WHEN job = 'singer' THEN 'interested'
+ELSE 'not interested' 
+END AS 'Project_suggestion'
+FROM famous_people 
+LEFT OUTER JOIN occupation
+ON famousppl_id = famous_people.id
+ORDER BY Project_suggestion;
+
+/*famous people who have worked with each other*/
+SELECT a.name, b.name AS worked_with FROM coworkers
+JOIN famous_people a
+ON a.id = coworkers.person_1
+JOIN famous_people b 
+ON b.id = coworkers.person_2;
