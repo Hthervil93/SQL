@@ -1,7 +1,8 @@
 
 /**How many orders were placed in January 
 SELECT COUNT(OrderID) FROM BIT_DB.JanSales
-WHERE length(orderID) = 6 AND orderID <> 'Order ID' 
+WHERE length(orderID) = 6 
+AND orderID <> 'Order ID' 
 
  How many of those orders were for an iPhone?
 SELECT COUNT(OrderID) FROM BIT_DB.JanSales
@@ -38,3 +39,14 @@ List all the products sold in Los Angeles in February, and include how many of e
 SELECT Product, COUNT(quantity) FROM BIT_DB.FebSales 
 WHERE location LIKE '%Los Angeles%'
 GROUP BY product
+
+How many of each type of headphone were sold in February?
+SELECT product, SUM(Quantity) FROM BIT_DB.FebSales
+WHERE product LIKE '%Headphones%'
+GROUP BY product
+
+Which product brought in the most revenue in January and how much revenue did it bring in total?
+SELECT product, SUM(Quantity*price) AS revenue FROM BIT_DB.JanSales
+GROUP BY product
+ORDER BY revenue DESC
+LIMIT 1;
