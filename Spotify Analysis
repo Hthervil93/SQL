@@ -36,5 +36,6 @@ SELECT artist_name, track_name, duration_ms FROM BIT_DB.Spotifydata ORDER BY dur
 Find the average popularity and tempo
 SELECT avg(popularity),avg(tempo) FROM BIT_DB.Spotifydata;
 
-List of songs where their tempo and popularity are above average 
-SELECT artist_name, track_name FROM BIT_DB.Spotifydata WHERE popularity > 86.8 AND tempo > 122
+List all selections where their tempo and popularity are above average 
+SELECT * FROM BIT_DB.Spotifydata WHERE tempo > (SELECT avg(tempo) FROM BIT_DB.Spotifydata) 
+AND popularity > (SELECT avg(popularity) FROM BIT_DB.Spotifydata)
