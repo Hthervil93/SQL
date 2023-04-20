@@ -1,0 +1,33 @@
+/** List customers name that are not located in the United States **/
+SELECT firstName, LastName, Customerid, country FROM chinook.customers 
+WHERE country <> 'USA'
+
+/** List invoices of customers that are in Brazil **/
+SELECT firstName, LastName, BillingCountry, invoiceDate, total FROM chinook.customers 
+LEFT JOIN chinook.invoices ON invoices.Customerid = customers.Customerid 
+WHERE BillingCountry = 'Brazil'
+
+/** Distinct list of counties from the invoices **/
+SELECT DISTINCT BillingCountry FROM chinook.invoices
+
+/** Show the invoices associated with each sales agent **/
+SELECT emp.LastName, emp.FirstName,inv.invoiceId 
+FROM chinook.employees emp
+JOIN chinook.customers cust ON cust.supportRepid= emp.Employeeid
+JOIN chinook.invoices inv ON inv.CustomerId = cust.CustomerId;
+
+/** Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers **/
+SELECT cust.LastName, cust.FirstName, country, emp.LastName, emp.FirstName, inv.total 
+FROM chinook.employees emp
+JOIN chinook.customers cust ON cust.supportrepid = emp.employeeid
+JOIN chinook.invoices inv ON inv.customerid = cust.customerid 
+ORDER BY total DESC
+
+/** total invoices in 2009 **/
+SELECT COUNT(*) FROM chinook.invoices WHERE invoicedate LIKE '2009%'
+
+/** shows all the Tracks, and include the Album name, Media type, and Genre**/
+SELECT trac.name AS track , al.title, gen.name AS genre, media.name AS mediatype FROM chinook.tracks trac
+LEFT JOIN chinook.media_types media ON media.mediatypeid = trac.mediatypeid
+LEFT JOIN chinook.albums al ON al.albumid = trac.albumid
+LEFT JOIN chinook.genres gen ON gen.genreid = trac.genreid
