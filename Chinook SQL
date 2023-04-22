@@ -26,8 +26,20 @@ ORDER BY total DESC
 /** total invoices in 2009 **/
 SELECT COUNT(*) FROM chinook.invoices WHERE invoicedate LIKE '2009%'
 
-/** shows all the Tracks, and include the Album name, Media type, and Genre**/
+/** shows all the Tracks, and include the Album name, Media type, and Genre **/
 SELECT trac.name AS track , al.title, gen.name AS genre, media.name AS mediatype FROM chinook.tracks trac
 LEFT JOIN chinook.media_types media ON media.mediatypeid = trac.mediatypeid
 LEFT JOIN chinook.albums al ON al.albumid = trac.albumid
 LEFT JOIN chinook.genres gen ON gen.genreid = trac.genreid
+
+/** Show the average total of each track **/
+SELECT trac.name, AVG(TOTAL) FROM chinook.invoice_items invit
+LEFT JOIN chinook.tracks trac ON trac.trackid= invit.trackid
+LEFT JOIN chinook.invoices inv ON invit.invoiceid= inv.invoiceid
+GROUP BY trac.name
+
+/** show all the tracknames, unit price, album names for artist name AC/DC **/
+SELECT trac.name, a.name, al.title, trac.unitprice FROM chinook.artists a 
+LEFT JOIN chinook.albums al ON a.artistid= al.artistid
+LEFT JOIN chinook.tracks trac ON trac.albumid= al.albumid
+WHERE a.name LIKE 'ac/dc'
